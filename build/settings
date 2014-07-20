@@ -5,8 +5,7 @@
 BOOTSIZE="64M"
 DISTRO="wheezy"
 BUILD_DIR="/srv/raspian/build"
-CHROOT_DIR="${BUILD_DIR}/rootfs"
-BOOT="${CHROOT_DIR}/boot"
+CHROOT_DIR="/srv/raspian/build/rootfs"
+BOOT="/srv/raspian/build/rootfs/boot"
 TIMESTAMP=`date +%Y%m%d`
 DEBIAN_MIRROR="http://mirrordirector.raspbian.org/raspbian"
-IMAGE_FILE="${BUILD_DIR}/images/raspbian_basic_${DISTRO}_${TIMESTAMP}.img"

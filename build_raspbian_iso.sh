@@ -16,8 +16,10 @@ function main() {
     mkdir -vp ${BUILD_DIR}
     mkdir -vp ${BUILD_DIR}/images
 
+
   box "Creating image file"
     source ${WORKING_DIR}/build/create-image 
+    IMAGE_FILE="${BUILD_DIR}/images/raspbian_basic_${DISTRO}_${TIMESTAMP}.img"
     create_image_file
 
   box "Mounting and partitioning mounted disk image"
