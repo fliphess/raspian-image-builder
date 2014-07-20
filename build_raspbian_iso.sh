@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 WORKING_DIR=$( dirname $( readlink -f $0 ))
 
 function die() { echo "Error in $0: $1"; exit 1; }
@@ -50,6 +50,8 @@ function main() {
   box "Bootstrapping raspian"
     cd ${CHROOT_DIR}
     debootstrap --foreign --arch armhf ${DISTRO} ${CHROOT_DIR}
+    cp /usr/bin/qemu-arm-static usr/bin/
+
     LANG=C chroot ${CHROOT_DIR} /debootstrap/debootstrap --second-stage
 
   box "Adjusting settings in chroot"
