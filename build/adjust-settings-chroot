@@ -1,0 +1,11 @@
+function adjust_settings_in_chroot() {
+  mount ${BOOT_PARTITION} ${BOOT}
+  echo "deb ${DEBIAN_MIRROR} ${DISTRO} main contrib non-free rpi" >> etc/apt/sources.list
+  echo "dwc_otg.lpm_enable=0 console=ttyAMA0,115200 kgdboc=ttyAMA0,115200 console=tty1 root=/dev/mmcblk0p2 rootfstype=ext4 rootwait" > boot/cmdline.txt
+  echo -e "\nproc            /proc           proc    defaults        0       0\n/dev/mmcblk0p1  /boot           vfat    defaults        0       0" > etc/fstab
+
+  echo -e "raspberrypi" > etc/hostname
+  echo -e "auto lo\niface lo inet loopback\n\nauto eth0\niface eth0 inet dhcp\n\n" > etc/network/interfaces
+  echo -e "console-common console-data/keymap/policy      select  Select keymap from full list\nconsole-common    console-data/keymap/full        select  us\n" > debconf.set
+  echo -e "vchiq\nsnd_bcm2835"  >> etc/modules
+}

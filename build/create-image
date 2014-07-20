@@ -1,0 +1,21 @@
+function create_image_file() {
+dd if=/dev/zero of=${IMAGE_FILE} bs=1MB count=3800
+LOOP_DEVICE=`losetup -f --show ${IMAGE_FILE}`
+echo "image ${IMAGE_FILE} created and mounted as ${LOOP_DEVICE}"
+
+fdisk ${LOOP_DEVICE} << EOF
+n
+p
+1
+
++${BOOTSIZE}
+t
+c
+n
+p
+2
+
+
+w
+EOF
+}

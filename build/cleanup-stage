@@ -1,0 +1,6 @@
+function cleanup_stage() {
+  echo -e "deb ${DEBIAN_MIRROR} ${DISTRO} main contrib non-free\n" > etc/apt/sources.list
+  echo -e "#!/bin/bash -x\naptitude update\naptitude clean\napt-get clean\nrm -f cleanup\n" > cleanup
+  chmod +x cleanup
+  LANG=C chroot ${CHROOT_DIR} /cleanup
+}
