@@ -1,4 +1,5 @@
 #!/bin/bash -x
+
 WORKING_DIR=$( dirname $( readlink -f $0 ))
 
 function die() { echo "Error in $0: $1"; exit 1; }
@@ -72,10 +73,7 @@ function main() {
     sync ; sync ; sync ; sleep 10
 
   box "Unmounting partitions in chroot"
-    PARTITIONS=( $BOOT_PARTITION ${CHROOT_DIR}/dev/pts ${CHROOT_DIR}/dev ${CHROOT_DIR}/sys ${CHROOT_DIR}/proc ${CHROOT_DIR} ${ROOT_PARTITION} )
-    for $PART in ${PARTIONS[@]} ; do
-        umount -l ${PART}
-    done
+    umount -lf $BOOT_PARTITION ${CHROOT_DIR}/dev/pts ${CHROOT_DIR}/dev ${CHROOT_DIR}/sys ${CHROOT_DIR}/proc ${CHROOT_DIR} ${ROOT_PARTITION} )
 
   box "All Done!"
 }

@@ -1,25 +1,24 @@
 function create_third_stage() {
-echo "#!/bin/bash -x
+  echo "#!/bin/bash -x
+  gpg --keyserver pool.sks-keyservers.net --recv 9165938D90FDDD2E && gpg --export --armor 9165938D90FDDD2E | apt-key add -
 
-gpg --keyserver pool.sks-keyservers.net --recv 9165938D90FDDD2E && gpg --export --armor 9165938D90FDDD2E | apt-key add -
+  debconf-set-selections /debconf.set
+  rm -f /debconf.set
 
-debconf-set-selections /debconf.set
-rm -f /debconf.set
+  apt-get update
+  apt-get -y install git-core binutils ca-certificates raspi-config curl
+  wget --continue https://raw.github.com/Hexxeh/rpi-update/master/rpi-update -O /usr/bin/rpi-update
+  chmod +x /usr/bin/rpi-update
+  mkdir -p /lib/modules/3.1.9+
+  touch /boot/start.elf
 
-apt-get update
-apt-get -y install git-core binutils ca-certificates raspi-config curl
-wget --continue https://raw.github.com/Hexxeh/rpi-update/master/rpi-update -O /usr/bin/rpi-update
-chmod +x /usr/bin/rpi-update
-mkdir -p /lib/modules/3.1.9+
-touch /boot/start.elf
-
-DEBIAN_FRONTEND=noninteractive LC_ALL=C apt-get -y install locales console-common ntp openssh-server less vim
-cd
-
-echo \"root:plop\" | chpasswd
-sed -i -e 's/KERNEL\!=\"eth\*|/KERNEL\!=\"/' /lib/udev/rules.d/75-persistent-net-generator.rules
-rm -f /etc/udev/rules.d/70-persistent-net.rules
-rm -f third-stage
-" > third-stage
-chmod +x third-stage
+  DEBIAN_FRONTEND=noninteractive LC_ALL=C apt-get -y install locales console-common ntp openssh-server less vim
+  cd
+ 
+  echo \"root:plop\" | chpasswd
+  sed -i -e 's/KERNEL\!=\"eth\*|/KERNEL\!=\"/' /lib/udev/rules.d/75-persistent-net-generator.rules
+  rm -f /etc/udev/rules.d/70-persistent-net.rules
+  rm -f third-stage
+  " > third-stage
+  chmod +x third-stage
 }
